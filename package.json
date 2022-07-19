@@ -1,0 +1,23 @@
+{
+  "name": "yah-node-sdk",
+  "version": "0.1.0",
+  "description": "Yah Node.js SDK - includes libraries for SHIELD services and Function Blocks Configurations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "repository": "https://github.com/Yahilo/yah-node-sdk",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "dotenv": "^16.0.0"
+  },
+  "engines": {
+    "node": "14 || 16"
+  }
+}
