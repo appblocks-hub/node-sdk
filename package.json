@@ -10,7 +10,7 @@
   },
   "type": "module",
   "keywords": [],
-  "repository": "https://github.com/Yahilo/yah-node-sdk",
+  "repository": "https://github.com/yahilo/yah-node-sdk",
   "author": "",
   "license": "MIT",
   "dependencies": {
