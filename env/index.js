@@ -6,44 +6,40 @@
  */
 import dotenv from "dotenv";
 import path from "path";
+import { getEnvPath } from "./utils.js";
 
-// Path to root directory env
-const getEnvPath = (options) => {
-  const { dir, envFileName, relative } = options;
-
-  const root = `${relative}/`
-    .split(dir)[1]
-    .replace(/(?<=\/)(.*?)(?=\/)/g, "..");
-
-  return `${relative}${root || ""}../${envFileName}`;
-};
+const defaultEnvPaths = [
+  {
+    dir: "functions",
+    envFileName: ".env.function",
+  },
+  {
+    dir: "._ab_em",
+    envFileName: ".env.function",
+  },
+  {
+    dir: "view",
+    envFileName: ".env.view",
+  },
+];
 
 // Setup environment
-const init = () => {
-  let relative = path.resolve();
-  let envPath = `${relative}/.env`;
+const init = (customEnvPaths, customRoot) => {
+  try {
+    let envPaths = customEnvPaths || defaultEnvPaths;
+    let relative = customRoot || path.resolve();
+    let envPath = `${relative}/.env`;
 
-  [
-    {
-      dir: "functions",
-      envFileName: ".env.function",
-    },
-    {
-      dir: "._ab_em",
-      envFileName: ".env.function",
-    },
-    {
-      dir: "view",
-      envFileName: ".env.view",
-    },
-  ].some((pathData) => {
-    if (!envPath.includes(`/${pathData.dir}`)) return false;
+    for (const pathData of envPaths) {
+      if (!envPath.includes(`/${pathData.dir}`)) continue;
+      envPath = getEnvPath({ ...pathData, relative });
+      break;
+    }
 
-    envPath = getEnvPath({ ...pathData, relative });
-    return true;
-  });
-
-  dotenv.config({ path: envPath });
+    dotenv.config({ path: envPath });
+  } catch (error) {
+    throw new Error("Error setting environments");
+  }
 };
 
 export default { init };

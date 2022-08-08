@@ -6,5 +6,5 @@
  */
 
 export default {
-  SHIELD_URL: "https://shield.yahilo.io",
+  SHIELD_URL: "https://shield.yahilo.com",
 };

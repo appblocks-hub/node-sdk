@@ -6,46 +6,39 @@
  */
 
 import path from "path";
+import { getSharedPath, getDynamicImport } from "./utils.js";
 
-// Path to shared directory
-const getSharedPath = (options) => {
-  const { dir, sharedFolder, relative } = options;
+const defaultSharedDirectory = [
+  {
+    dir: "functions",
+    sharedFolder: "functions/shared-fns/index.js",
+  },
+  {
+    dir: "._ab_em",
+    sharedFolder: "functions/shared-fns/index.js",
+  },
+];
 
-  const currentDir = `${relative}/`
-    .split(dir)[1]
-    ?.replace(/(?<=\/)(.*?)(?=\/)/g, "..");
-
-  return `${relative}${currentDir || ""}../${sharedFolder}`;
-};
-
-const getShared = () => {
+const getShared = (customSharedDirectory, customSharedFolderPath) => {
   return new Promise(async (resolve, reject) => {
     try {
       let relative = path.resolve();
-      let sharedFolderPath = `${relative}/shared-fns/index.js`;
+      let sharedFolderPath =
+        customSharedFolderPath || `${relative}/shared-fns/index.js`;
 
-      const dirPaths = [
-        {
-          dir: "functions",
-          sharedFolder: "functions/shared-fns/index.js",
-        },
-        {
-          dir: "._ab_em",
-          sharedFolder: "functions/shared-fns/index.js",
-        },
-      ];
+      const dirPaths = customSharedDirectory || defaultSharedDirectory;
 
       for await (const pathData of dirPaths) {
         if (sharedFolderPath.includes(`/${pathData.dir}`)) {
           sharedFolderPath = getSharedPath({ ...pathData, relative });
-          const sharedData = await import(sharedFolderPath);
-          return resolve(sharedData.default);
+          const sharedData = await getDynamicImport(sharedFolderPath);
+          return resolve(sharedData);
         }
       }
 
       // For testing read shared folder in relative path
-      const testSharedData = await import(sharedFolderPath);
-      return resolve(testSharedData.default);
+      const testSharedData = await getDynamicImport(sharedFolderPath);
+      return resolve(testSharedData);
     } catch (error) {
       reject(error);
     }
