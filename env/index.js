@@ -8,25 +8,27 @@ import dotenv from "dotenv";
 import path from "path";
 import { getEnvPath } from "./utils.js";
 
-const defaultEnvPaths = [
-  {
-    dir: "functions",
-    envFileName: ".env.function",
-  },
-  {
-    dir: "._ab_em",
-    envFileName: ".env.function",
-  },
-  {
-    dir: "view",
-    envFileName: ".env.view",
-  },
-];
+const load_config = () => {
+  return [
+      {
+        dir: "functions",
+        envFileName: ".env.function",
+      },
+      {
+        dir: "._ab_em",
+        envFileName: ".env.function",
+      },
+      {
+        dir: "view",
+        envFileName: ".env.view",
+      },
+    ];
+}
 
 // Setup environment
 const init = (customEnvPaths, customRoot) => {
   try {
-    let envPaths = customEnvPaths || defaultEnvPaths;
+    let envPaths = customEnvPaths || load_config();
     let relative = customRoot || path.resolve();
     let envPath = `${relative}/.env`;
 

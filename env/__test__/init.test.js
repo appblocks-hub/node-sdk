@@ -19,6 +19,10 @@ afterAll(() => {
   jest.clearAllMocks();
 });
 
+afterAll(() => {
+  jest.clearAllMocks();
+});
+
 // case success
 test("should call getEnvPath function", async () => {
   const { getEnvPath } = await import("../utils.js");
