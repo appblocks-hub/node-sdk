@@ -1,5 +1,5 @@
 /**
- * Copyright (c)  Yahilo. and its affiliates.
+ * Copyright (c)  Appblocks and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -30,10 +30,10 @@ const init = (customEnvPaths, customRoot) => {
   try {
     let envPaths = customEnvPaths || load_config();
     let relative = customRoot || path.resolve();
-    let envPath = `${relative}/.env`;
+    let envPath = path.join(relative, ".env");
 
     for (const pathData of envPaths) {
-      if (!envPath.includes(`/${pathData.dir}`)) continue;
+      if (!envPath.includes(`${pathData.dir}`)) continue;
       envPath = getEnvPath({ ...pathData, relative });
       break;
     }

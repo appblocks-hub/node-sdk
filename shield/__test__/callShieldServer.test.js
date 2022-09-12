@@ -1,5 +1,5 @@
 /**
- * Copyright (c)  Yahilo. and its affiliates.
+ * Copyright (c)  Appblocks and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,7 +11,7 @@ import { callShieldServer } from "../utils.js";
 jest.mock("axios");
 
 beforeAll(() => {
-  global.YahConfig = {
+  global.abConfig = {
     clientId: "test clientId",
     clientSecret: "test clientSecret",
   };
@@ -61,11 +61,11 @@ test("should throw authrization header is not set", () => {
 });
 
 test("should throw app config error", () => {
-  global.YahConfig = {};
+  global.abConfig = {};
   const req = { headers: { authorization: "test token" } };
   const url = "http://localhost:3000";
 
   expect(async () => {
     await callShieldServer(req, url);
-  }).rejects.toThrow("Yahilo app config is not set");
+  }).rejects.toThrow("Appblocks app config is not set");
 });

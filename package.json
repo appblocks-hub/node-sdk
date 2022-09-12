@@ -1,7 +1,7 @@
 {
-  "name": "yah-node-sdk",
+  "name": "node-sdk",
   "version": "0.1.0",
-  "description": "Yah Node.js SDK - includes libraries for SHIELD services and Function Blocks Configurations",
+  "description": "Appblocks Node SDK - includes libraries for SHIELD services and Function Blocks Configurations",
   "main": "index.js",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
@@ -15,7 +15,7 @@
   },
   "type": "module",
   "keywords": [],
-  "repository": "https://github.com/yahilo/yah-node-sdk",
+  "repository": "https://github.com/appblocks-hub/node-sdk",
   "author": "",
   "license": "MIT",
   "dependencies": {
