@@ -13,7 +13,7 @@ npm install node-sdk -s
 Run Handler / Function using run method by importing functions sdk from node-sdk.
 
 ```
-import { functions } from "node-sdk";
+import { functions } from "@appblocks/node-sdk";
 
 export block_name = (req, res) => {
 
@@ -34,7 +34,7 @@ npm install node-sdk
 Initialze the application using internals SDK
 
 ```
-import { internals } from "node-sdk";
+import { internals } from "@appblocks/node-sdk";
 
 internals.initialize({
 		clientId:     process.env.CLIENT_ID,
@@ -45,7 +45,7 @@ internals.initialize({
 Using the methods from shield sdk
 
 ```
-import { shield } from "node-sdk";
+import { shield } from "@appblocks/node-sdk";
 
 const SheildExampleHandler = async (req, res, next) => {
   try {
@@ -65,7 +65,7 @@ const SheildExampleHandler = async (req, res, next) => {
 Run SheildExampleHandler using run method from funciton sdk.
 
 ```
-import { functions } from "node-sdk";
+import { functions } from "@appblocks/node-sdk";
 
 functions.run(SheildExampleHandler)
 ```
