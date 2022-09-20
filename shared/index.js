@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import  fs from "fs"
 import path from "path";
-import { getSharedPath, getDynamicImport } from "./utils.js";
+import { getSharedPath, getDynamicImport, getSharedDirectoryPath } from "./utils.js";
 
 const defaultSharedDirectory = [
   {
@@ -45,4 +46,43 @@ const getShared = (customSharedDirectory, customSharedFolderPath) => {
   });
 };
 
-export default { getShared };
+export const getSharedModules = async (options) => {
+  return new Promise(async (resolve, reject) => {
+    try {  
+      let sharedDirectoryPath=getSharedDirectoryPath(options)
+      
+      let functionsObj={}
+      let fileLoadingPromise=[]
+      
+    fileLoadingPromise=fs.readdirSync(sharedDirectoryPath).map(async file => {
+      return new Promise(async (resolve,reject)=>{
+        try{
+          let indexFilePath=sharedDirectoryPath+`/${file}/index.js`
+          let sharedFolderPath=sharedDirectoryPath+ `/${file}`
+          const fileStats=fs.statSync(sharedFolderPath)
+          if(fileStats.isDirectory()){
+          const module = await import(indexFilePath)
+          functionsObj={...functionsObj,...module.default}
+          }
+          return resolve({})
+        }catch(err){
+          console.log("err",err)
+          reject(err);
+        }
+      })
+        })
+    
+   await Promise.allSettled(fileLoadingPromise)
+    return resolve(functionsObj)
+  
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+};
+
+const functionsObj=await getSharedModules({sharedDir:"../examples/shared-fns"})
+console.log(functionsObj)
+
+export default { getShared,getSharedModules};

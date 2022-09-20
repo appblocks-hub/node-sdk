@@ -1,0 +1,17 @@
+
+
+{
+  "name": "user_validation",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
+    "yah-node-sdk": "^0.1.0"
+  }
+}

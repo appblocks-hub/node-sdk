@@ -24,6 +24,8 @@ export const getSharedPath = (options) => {
   }
 };
 
+
+
 export const getDynamicImport = async (sharedFolderPath) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -38,3 +40,18 @@ export const getDynamicImport = async (sharedFolderPath) => {
     }
   });
 };
+
+export const getSharedDirectoryPath=(options)=>{
+  try {
+    if (isEmptyObject(options)) throw new Error("invalid option");
+
+    const {sharedDir} = options;
+    let sharedModulesPath =sharedDir
+
+    return sharedModulesPath;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
