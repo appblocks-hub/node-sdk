@@ -1,11 +1,12 @@
 /**
- * Copyright (c)  Yahilo. and its affiliates.
+ * Copyright (c)  Appblocks and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 import { isEmptyObject } from "../utils.js";
+import path from "path";
 
 // Path to root directory env
 export const getEnvPath = (options) => {
@@ -18,7 +19,7 @@ export const getEnvPath = (options) => {
       .split(dir)[1]
       .replace(/(?<=\/)(.*?)(?=\/)/g, "..");
 
-    return `${relative}${root || ""}../${envFileName}`;
+    return path.join(relative, root || "", `../${envFileName}`);
   } catch (error) {
     throw error;
   }

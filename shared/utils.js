@@ -1,11 +1,13 @@
 /**
- * Copyright (c)  Yahilo. and its affiliates.
+ * Copyright (c)  Appblocks and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
 import { isEmptyObject, isEmptyString } from "../utils.js";
+import { pathToFileURL } from "url";
+import path from "path";
 
 // Path to shared directory
 export const getSharedPath = (options) => {
@@ -18,7 +20,11 @@ export const getSharedPath = (options) => {
       .split(dir)[1]
       ?.replace(/(?<=\/)(.*?)(?=\/)/g, "..");
 
-    return `${relative}${currentDir ? currentDir + "../" : "/"}${sharedFolder}`;
+    return path.join(
+      relative,
+      currentDir ? currentDir + "../" : "/",
+      sharedFolder
+    );
   } catch (error) {
     throw error;
   }
@@ -31,8 +37,14 @@ export const getDynamicImport = async (sharedFolderPath) => {
         reject("invalid path");
       }
 
-      const sharedData = await import(sharedFolderPath);
-      return resolve(sharedData.default);
+      if (process.platform === "win32" || process.platform === "win64") {
+        const fileUrl = pathToFileURL(sharedFolderPath).href;
+        const sharedData = await import(fileUrl);
+        return resolve(sharedData.default);
+      } else {
+        const sharedData = await import(sharedFolderPath);
+        return resolve(sharedData.default);
+      }
     } catch (error) {
       reject(error);
     }

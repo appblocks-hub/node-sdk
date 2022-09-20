@@ -1,19 +1,19 @@
-# yah-node-sdk
+# node-sdk
 
-Yah Node.js SDK - includes libraries for SHIELD services and Function Blocks Configurations
+Appblocks Node SDK - includes libraries for SHIELD services and Function Blocks Configurations
 
 ## SDK Usage
 
 1. To write a function,
 
 ```
-npm install yah-node-sdk -s
+npm install node-sdk -s
 ```
 
-Run Handler / Function using run method by importing functions sdk from yah-node-sdk.
+Run Handler / Function using run method by importing functions sdk from node-sdk.
 
 ```
-import { functions } from "yah-node-sdk";
+import { functions } from "@appblocks/node-sdk";
 
 export block_name = (req, res) => {
 
@@ -26,7 +26,7 @@ functions.run(block_name)
 2. SHIELD
 
 ```
-npm install yah-node-sdk
+npm install node-sdk
 ```
 
 `Before using shield, app need to be initialized.`
@@ -34,7 +34,7 @@ npm install yah-node-sdk
 Initialze the application using internals SDK
 
 ```
-import { internals } from "yah-node-sdk";
+import { internals } from "@appblocks/node-sdk";
 
 internals.initialize({
 		clientId:     process.env.CLIENT_ID,
@@ -45,7 +45,7 @@ internals.initialize({
 Using the methods from shield sdk
 
 ```
-import { shield } from "yah-node-sdk";
+import { shield } from "@appblocks/node-sdk";
 
 const SheildExampleHandler = async (req, res, next) => {
   try {
@@ -65,7 +65,7 @@ const SheildExampleHandler = async (req, res, next) => {
 Run SheildExampleHandler using run method from funciton sdk.
 
 ```
-import { functions } from "yah-node-sdk";
+import { functions } from "@appblocks/node-sdk";
 
 functions.run(SheildExampleHandler)
 ```
@@ -75,14 +75,14 @@ To run a function, There is 2 option
 1. Using CLI
 
 ```
-yah start block_name
+bb start block_name
 ```
 to start an individual block.
 
 or
 
 ```
-yah start
+bb start
 ```
 
 to start them all.
@@ -97,6 +97,6 @@ node index.js --port=3000
 
 the above command will run function in port 3000
 
-go to github.com/Yahilo/yah-node-sdk/tree/main/examples/shield-example to see more example.
+go to github.com/appblocks-hub/node-sdk/tree/main/examples/shield-example to see more example.
 
 Read Docs for advanced tooling

@@ -1,5 +1,5 @@
 /**
- * Copyright (c)  Yahilo. and its affiliates.
+ * Copyright (c)  Appblocks and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -25,14 +25,14 @@ export const getArgPortFlag = () => {
 export const getPort = async (functionName) => {
   try {
     const {
-      YAHILO_EMULATOR_URL,
-      YAHILO_EMULATOR_INITIALISED,
+      AB_EMULATOR_URL,
+      AB_EMULATOR_INITIALISED,
       FUNCTION_ENV,
       FUNCTION_PORT,
     } = process.env;
 
     // Return FUNCTION_PORT from env if production environment
-    if (FUNCTION_ENV === "YAHILO_PROD_FUNCTION") return FUNCTION_PORT;
+    if (FUNCTION_ENV === "AB_PROD_FUNCTION") return FUNCTION_PORT;
 
     // Get port from argument flag
     const argPortFlag = getArgPortFlag();
@@ -41,16 +41,16 @@ export const getPort = async (functionName) => {
     if (argPortFlag) return argPortFlag;
 
     // Check if emulator is initialized else exit app
-    if (YAHILO_EMULATOR_INITIALISED !== "INIT") {
+    if (AB_EMULATOR_INITIALISED !== "INIT") {
       throw new Error(
-        "Please start yahilo emulator before running the block. Or use --port=PortValue argument"
+        "Please start appblocks emulator before running the block. Or use --port=PortValue argument"
       );
     }
 
     // Get and return port from emulator
-    console.log("=== Requesting to YAHILO_EMULATOR_URL to get free port == ");
+    console.log("=== Requesting to AB_EMULATOR_URL to get free port == ");
     const response = await axios.post(
-      `${YAHILO_EMULATOR_URL}/?functionName=${functionName}`
+      `${AB_EMULATOR_URL}/?functionName=${functionName}`
     );
     return response.data.port;
   } catch (error) {

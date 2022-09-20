@@ -1,5 +1,5 @@
 /**
- * Copyright (c)  Yahilo. and its affiliates.
+ * Copyright (c)  Appblocks and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,11 +15,11 @@ import axios from "axios";
  */
 export const callShieldServer = async (req, url) => {
   try {
-    if (!global.YahConfig?.clientId || !global.YahConfig?.clientSecret) {
-      throw new Error("Yahilo app config is not set");
+    if (!global.abConfig?.clientId || !global.abConfig?.clientSecret) {
+      throw new Error("Appblocks app config is not set");
     }
-    // Get yahilo app config from global
-    const { clientId, clientSecret } = global.YahConfig;
+    // Get appblocks app config from global
+    const { clientId, clientSecret } = global.abConfig;
 
     if (!req?.headers || !req?.headers["authorization"]) {
       throw new Error("Authorization header is not set");
