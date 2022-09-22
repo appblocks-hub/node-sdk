@@ -1,0 +1,13 @@
+
+
+{
+  "name": "shared-fns",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}

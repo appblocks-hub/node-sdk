@@ -1,0 +1,3 @@
+
+
+{"name":"user_database","type":"shared-fn","source":{"https":"https://github.com/yahilo/user_database","ssh":"git@github.com:yahilo/user_database.git"},"language":"nodejs","start":"npx webpack-dev-server","build":"npx webpack","postPull":"npm i","standAloneBlox":false}

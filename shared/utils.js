@@ -50,3 +50,16 @@ export const getDynamicImport = async (sharedFolderPath) => {
     }
   });
 };
+
+export const getSharedDirectoryPath = (options) => {
+  try {
+    if (isEmptyObject(options)) throw new Error("invalid option");
+
+    const { sharedDir } = options;
+    let sharedModulesPath = sharedDir;
+
+    return sharedModulesPath;
+  } catch (error) {
+    throw error;
+  }
+};

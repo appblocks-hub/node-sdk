@@ -1,0 +1,20 @@
+
+
+{
+  "name": "user_database",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.0.0",
+    "prisma-json-schema-generator": "file:../../../../../_TEST/prisma-json-schema-generator",
+    "yah-node-sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "prisma": "^4.0.0"
+  }
+}

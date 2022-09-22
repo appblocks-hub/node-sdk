@@ -12,6 +12,7 @@ beforeAll(() => {
     return {
       getSharedPath: jest.fn(),
       getDynamicImport: jest.fn(),
+      getSharedDirectoryPath: jest.fn(),
     };
   });
 });
