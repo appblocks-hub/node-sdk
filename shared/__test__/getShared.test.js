@@ -1,5 +1,5 @@
 /**
- * Copyright (c)  Yahilo. and its affiliates.
+ * Copyright (c)  Appblocks and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,6 +12,7 @@ beforeAll(() => {
     return {
       getSharedPath: jest.fn(),
       getDynamicImport: jest.fn(),
+      getSharedDirectoryPath: jest.fn(),
     };
   });
 });
