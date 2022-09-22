@@ -1,6 +1,6 @@
 {
   "name": "@appblocks/node-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Appblocks Node SDK - includes libraries for SHIELD services and Function Blocks Configurations",
   "main": "index.js",
   "scripts": {
