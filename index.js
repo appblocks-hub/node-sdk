@@ -15,7 +15,7 @@ const { run } = functions;
 const { getUID, getUser } = shield;
 const { initialize } = internals;
 const { init: envInit } = env;
-const { getShared } = shared;
+const { getShared,getSharedModules } = shared;
 
 // For named export
 export {
@@ -30,6 +30,7 @@ export {
   envInit,
   shared,
   getShared,
+  getSharedModules
 };
 
 // For whole sdk default export
