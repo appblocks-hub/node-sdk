@@ -7,7 +7,9 @@
 
 import shieldConfig from "../config/shield.js";
 import { callShieldServer } from "./utils.js";
+
 const { SHIELD_URL } = shieldConfig;
+const shieldUrl = process.env.SHIELD_URL || SHIELD_URL
 
 /**
  * Function that gets user details from shield.
@@ -17,7 +19,7 @@ const { SHIELD_URL } = shieldConfig;
 const getUser = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const userDetails = await callShieldServer(req, `${SHIELD_URL}/get-user`);
+      const userDetails = await callShieldServer(req, `${shieldUrl}/get-user`);
       resolve(userDetails);
     } catch (error) {
       reject(error.message || error);
@@ -33,7 +35,7 @@ const getUser = (req) => {
 const getUID = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const userIdRes = await callShieldServer(req, `${SHIELD_URL}/get-uid`);
+      const userIdRes = await callShieldServer(req, `${shieldUrl}/get-uid`);
       resolve(userIdRes.user_id);
     } catch (error) {
       reject(error.message || error);
