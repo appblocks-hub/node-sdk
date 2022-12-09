@@ -5,65 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 import path from "path";
+import fs from "fs";
 import { jest } from "@jest/globals";
+import config from "../../config/index.js";
 
-beforeAll(() => {
-  jest.unstable_mockModule("../utils.js", () => {
-    return {
-      getSharedPath: jest.fn(),
-      getDynamicImport: jest.fn(),
-      getSharedDirectoryPath: jest.fn(),
-    };
+test("should return empty object", async () => {
+  const { default: shared } = await import("../index.js");
+  const sharedFunctions = await shared.getShared();
+  expect(sharedFunctions).toEqual({});
+});
+
+test("should resolve custom passed path functions", async () => {
+  const customDirectoryPaths = [
+    `${path.resolve()}/examples/shared-example/sample_utils`,
+  ];
+  const { default: shared } = await import("../index.js");
+  const sharedFunctions = await shared.getShared(customDirectoryPaths);
+  expect(sharedFunctions).toEqual({
+    sharedSampleValue: "Sample constant value",
   });
-});
-
-afterAll(() => {
-  jest.clearAllMocks();
-});
-
-const customSharedDirectory = [
-  {
-    dir: "shared-fns",
-    sharedFolder: "functions/shared-fns/index.js",
-  },
-];
-const customSharedFolderPath = path.resolve() + "/shared-fns/index.js";
-
-test("should call getSharedPath and getDynamicImport", async () => {
-  const { getSharedPath, getDynamicImport } = await import("../utils.js");
-  const { default: shared } = await import("../index.js");
-
-  await shared.getShared(customSharedDirectory, customSharedFolderPath);
-
-  expect(getSharedPath).toHaveBeenCalled();
-  expect(getDynamicImport).toHaveBeenCalled();
-});
-
-test("should reject error on import issue", async () => {
-  const { getSharedPath, getDynamicImport } = await import("../utils.js");
-  const { default: shared } = await import("../index.js");
-
-  getDynamicImport.mockRejectedValueOnce("invalid path");
-
-  expect(async () => {
-    await shared.getShared(customSharedDirectory, customSharedFolderPath);
-  }).rejects.toEqual("invalid path");
-
-  expect(getSharedPath).toHaveBeenCalled();
-  expect(getDynamicImport).toHaveBeenCalled();
 });
 
 test("should reject error on invalid option", async () => {
-  const { getSharedPath } = await import("../utils.js");
   const { default: shared } = await import("../index.js");
 
-  getSharedPath.mockImplementationOnce(() => {
-    throw new Error("invalid option");
+  const parentPath = path.resolve();
+  process.env.parentPath = parentPath;
+
+  const emulatorPath = `${parentPath}/${config.EMULATOR_FOLDER_NAME}`;
+  jest.spyOn(path, "resolve").mockResolvedValueOnce(emulatorPath);
+  jest.spyOn(fs, "existsSync").mockReturnValue(true);
+  jest
+    .spyOn(fs, "readFileSync")
+    .mockReturnValue(
+      '{"dependencies":{"sample_utils":{"directory":"/examples/shared-example/sample_utils","meta":{"name":"sample_utils","type":"shared-fn"}}}}'
+    );
+
+  const sharedFunctions = await shared.getShared();
+  expect(sharedFunctions).toEqual({
+    sharedSampleValue: "Sample constant value",
   });
-
-  expect(async () => {
-    await shared.getShared(customSharedDirectory, customSharedFolderPath);
-  }).rejects.toThrow("invalid option");
-
-  expect(getSharedPath).toHaveBeenCalled();
 });
