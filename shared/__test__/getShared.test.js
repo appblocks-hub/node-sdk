@@ -26,7 +26,7 @@ test("should resolve custom passed path functions", async () => {
   });
 });
 
-test("should reject error on invalid option", async () => {
+test("should get shared data from parent path as root", async () => {
   const { default: shared } = await import("../index.js");
 
   const parentPath = path.resolve();
@@ -45,4 +45,12 @@ test("should reject error on invalid option", async () => {
   expect(sharedFunctions).toEqual({
     sharedSampleValue: "Sample constant value",
   });
+});
+
+test("should get throw error on invalid path", async () => {
+  const customDirectoryPaths = [`/home/test/non_existiting_path`];
+  const { default: shared } = await import("../index.js");
+  expect(async () => {
+    await shared.getShared(customDirectoryPaths);
+  }).rejects;
 });

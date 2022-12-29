@@ -50,7 +50,7 @@ const getShared = (customDirectoryPaths) => {
       }
       if (sharedDirectoryPaths?.length < 1) return resolve(sharedFunctions);
 
-      const result =  await Promise.allSettled(
+      const result = await Promise.allSettled(
         sharedDirectoryPaths.map(async (filePath) => {
           try {
             let indexFilePath = `${filePath}/index.js`;
