@@ -50,6 +50,8 @@ const getShared = (customDirectoryPaths) => {
       }
       if (sharedDirectoryPaths?.length < 1) return resolve(sharedFunctions);
 
+      let impErrs = [];
+
       await Promise.allSettled(
         sharedDirectoryPaths.map(async (filePath) => {
           try {
@@ -62,13 +64,15 @@ const getShared = (customDirectoryPaths) => {
             const module = await import(indexFilePath);
             sharedFunctions = { ...sharedFunctions, ...module.default };
 
-            return {};
+            return true;
           } catch (err) {
-            return err;
+            impErrs.push(reason);
+            return false;
           }
         })
       );
 
+      if (impErrs.length > 0) throw errs;
       return resolve(sharedFunctions);
     } catch (error) {
       reject(error);
