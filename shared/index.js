@@ -33,7 +33,9 @@ const getShared = (customDirectoryPaths) => {
           const configPath = path.join(relativePath, blockConfigFileName);
           if (!fs.existsSync(configPath)) return resolve(sharedFunctions);
           const blockConfig = JSON.parse(fs.readFileSync(configPath));
-          parentPathValue = relativePath.replace(blockConfig.directory, "");
+          parentPathValue = blockConfig.directory
+            ? relativePath.replace(blockConfig.directory, "")
+            : relativePath;
         }
 
         const configPath = path.join(parentPathValue, blockConfigFileName);
@@ -66,13 +68,13 @@ const getShared = (customDirectoryPaths) => {
 
             return true;
           } catch (err) {
-            impErrs.push(reason);
+            impErrs.push(err);
             return false;
           }
         })
       );
 
-      if (impErrs.length > 0) throw errs;
+      if (impErrs.length > 0) throw impErrs;
       return resolve(sharedFunctions);
     } catch (error) {
       reject(error);
