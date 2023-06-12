@@ -38,7 +38,7 @@ test("should get shared data from parent path as root", async () => {
   jest
     .spyOn(fs, "readFileSync")
     .mockReturnValue(
-      '{"dependencies":{"sample_utils":{"directory":"/examples/shared-example/sample_utils","meta":{"name":"sample_utils","type":"shared-fn"}}}}'
+      '{"dependencies":{"sample_utils":{"directory":"/examples/shared-example/sample_utils"}}}'
     );
 
   const sharedFunctions = await shared.getShared();
@@ -48,7 +48,7 @@ test("should get shared data from parent path as root", async () => {
 });
 
 test("should get throw error on invalid path", async () => {
-  const customDirectoryPaths = [`/home/test/non_existiting_path`];
+  const customDirectoryPaths = [`/home/test/non_existing_path`];
   const { default: shared } = await import("../index.js");
   expect(async () => {
     await shared.getShared(customDirectoryPaths);

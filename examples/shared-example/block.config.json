@@ -7,20 +7,7 @@
   },
   "dependencies": {
     "sample_utils": {
-      "directory": "/sample_utils",
-      "meta": {
-        "name": "sample_utils",
-        "type": "shared-fn",
-        "source": {
-          "https": "https://github.com/user/sample_utils",
-          "ssh": "git@github.com:user/sample_utils.git"
-        },
-        "language": "nodejs",
-        "start": "node index.js",
-        "build": "",
-        "postPull": "npm i",
-        "standAloneBlock": false
-      }
+      "directory": "/sample_utils"
     }
   }
 }

@@ -8,19 +8,18 @@
 import path from "path";
 import fs from "fs";
 import { pathToFileURL } from "url";
+import { getSharedBlocks } from "./util.js";
 
 import config from "../config/index.js";
 
 const getShared = (customDirectoryPaths) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const { BLOCK_CONFIG_FILE_NAME, SHARED_BLOCK_TYPE } = config;
+      const { BLOCK_CONFIG_FILE_NAME } = config;
 
       const parentPath = process.env.parentPath;
       const blockConfigFileName =
         process.env.BLOCK_CONFIG_FILE_NAME || BLOCK_CONFIG_FILE_NAME;
-      const sharedBlockType =
-        process.env.SHARED_BLOCK_TYPE || SHARED_BLOCK_TYPE;
 
       let sharedDirectoryPaths = customDirectoryPaths;
       let sharedFunctions = {};
@@ -38,18 +37,9 @@ const getShared = (customDirectoryPaths) => {
             : relativePath;
         }
 
-        const configPath = path.join(parentPathValue, blockConfigFileName);
-        if (!fs.existsSync(configPath)) return resolve(sharedFunctions);
-        const blockConfig = JSON.parse(fs.readFileSync(configPath));
-        sharedDirectoryPaths = Object.values(blockConfig.dependencies).reduce(
-          (acc, r) => {
-            if (r.meta.type !== sharedBlockType) return acc;
-            acc.push(path.join(parentPathValue, r.directory));
-            return acc;
-          },
-          []
-        );
+        sharedDirectoryPaths = await getSharedBlocks(parentPathValue);
       }
+
       if (sharedDirectoryPaths?.length < 1) return resolve(sharedFunctions);
 
       let impErrs = [];
