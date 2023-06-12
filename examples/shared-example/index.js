@@ -8,7 +8,7 @@
 import { shared, functions } from "../../index.js";
 
 // Simple test request handler
-const requestHandler = async (req, res, next) => {
+const requestHandler = async (req, res) => {
   /**
    * This sdk function will read export data from shared-fns folder index inside function folder
    * (for testing, it also reads shared-fns folder in relative path)
@@ -24,5 +24,9 @@ const requestHandler = async (req, res, next) => {
   return "sample request handler";
 };
 
-// Run the function handler
-functions.run(requestHandler);
+try {
+  // Run the function handler
+  functions.run(requestHandler);
+} catch (error) {
+  console.log(error.message);
+}
