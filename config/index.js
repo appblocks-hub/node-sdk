@@ -15,7 +15,7 @@ const BLOCK_TYPES = {
 
 export default {
   BLOCK_CONFIG_FILE_NAME: "block.config.json",
-  EMULATOR_FOLDER_NAME: "._ab_em",
+  EMULATOR_FOLDER_NAME: "._bb_/functions_emulator",
   FUNCTION_ENV_FILE_NAME: ".env.function",
   VIEW_ENV_FILE_NAME: ".env.view",
   VIEW_BLOCK_TYPES: ["ui-container", "ui-elements"],
